@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Link, useNavigate } from 'react-router-dom';
@@ -15,7 +16,7 @@ function Registr() {
   });
   const [passwordMatchError, setPasswordMatchError] = useState('');
   const [isUsernameValid, setIsUsernameValid] = useState(true);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const handleInputChange = (e, field) => {
     const value = e.target.value;
@@ -51,81 +52,93 @@ function Registr() {
         confirmpassword: ''
       });
       setValidated(false);
-      axios.post('http://localhost:5000/users', formData).then(result =>{ 
-        alert("Account Created Successfully!!");
-        navigate('/login')
-    }).catch(err => console.log(err))
+      axios.post('http://localhost:5000/users', formData)
+        .then(result => {
+          alert('Account Created Successfully!!');
+          navigate('/login');
+        })
+        .catch(err => console.log(err));
     }
   };
 
-
   return (
-    <>
-      <div className=' justify-content-center align-items-center w-100 mt-5 '>
-        <div className='bg-light p-5 rounded me-5' style={{ width: '500px' }} id='tr'>
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <h2 className='text-center'>SIGN UP</h2>
-            <Row className="mb-3 ms-5">
-              <Form.Group as={Col} md="12" controlId="validationCustom01">
-                <Form.Label className='mt-5 ms-2'>User name:</Form.Label>
-                <Form.Control required type="text" placeholder="First name" pattern="[A-Za-z]+"
+    <Container fluid className="d-flex justify-content-center align-items-center mt-5">
+      <div className="bg-light p-5 rounded" style={{ maxWidth: '500px' }}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <h2 className="text-center">SIGN UP</h2>
+          <Row className="mb-3">
+            <Col md={12} className="mb-3">
+              <Form.Group controlId="validationCustom01">
+                <Form.Label className="mt-5 ms-2">User name:</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="First name"
+                  pattern="[A-Za-z]+"
                   title="Enter alphabets only"
                   value={formData.username}
-                  onChange={(e) => handleInputChange(e, 'username')} />
+                  onChange={(e) => handleInputChange(e, 'username')}
+                />
                 {!isUsernameValid && (
                   <div className="text-danger mt-1">Enter alphabets only for the username</div>
                 )}
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} className='mb-3'>
-                <Form.Label className='text-light mb-3'>Password</Form.Label>
-                <Form.Control
-                  required
-                  type="password"
-                  placeholder="Enter Password"
-                  value={formData.password}
-                  onChange={(e) => handleInputChange(e, 'password')}
-
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label className='text-light mb-3' required type="text">
-                  Confirm Password
-                </Form.Label>
-                <Form.Control
-                  required
-                  type="password"
-                  placeholder="Confirm Password"
-                  value={formData.confirmpassword}
-                  onChange={(e) => handleInputChange(e, 'confirmpassword')}
-                />
-                {passwordMatchError && (
-                  <div className="text-danger">{passwordMatchError}</div>
-                )}
-              </Form.Group>
-            </Row>
-            <Row className="mb-7 ms-5"></Row>
-            <Form.Group className="mb-7 ms-5">
-              <Form.Check
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Label className="text-light mb-3">Password</Form.Label>
+              <Form.Control
                 required
-                label="Agree to terms and conditions"
-                feedback="You must agree before submitting."
-                feedbackType="invalid"
+                type="password"
+                placeholder="Enter Password"
+                value={formData.password}
+                onChange={(e) => handleInputChange(e, 'password')}
               />
-            </Form.Group>
-            <Button type="submit" className='me-5 mt-4' id='b'>
-              Submit form
-            </Button>
-          </Form>
-          <h6 className='mt-4 p-4'>
-            If you have an account, please{' '}
-            <Link to={'/login'} style={{ textDecoration: 'none' }}>
-              Login now
-            </Link>
-          </h6>
-        </div>
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Label className="text-light mb-3" required type="text">
+                Confirm Password
+              </Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder="Confirm Password"
+                value={formData.confirmpassword}
+                onChange={(e) => handleInputChange(e, 'confirmpassword')}
+              />
+              {passwordMatchError && (
+                <div className="text-danger">{passwordMatchError}</div>
+              )}
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <Form.Group className="mb-7">
+                <Form.Check
+                  required
+                  label="Agree to terms and conditions"
+                  feedback="You must agree before submitting."
+                  feedbackType="invalid"
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <Button type="submit" className="me-5 mt-4" id="b">
+                Submit form
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+        <h6 className="mt-4 p-4">
+          If you have an account, please{' '}
+          <Link to={'/login'} style={{ textDecoration: 'none' }}>
+            Login now
+          </Link>
+        </h6>
       </div>
-    </>
+    </Container>
   );
 }
 

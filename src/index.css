@@ -7,10 +7,12 @@ body {
   background-color: black;
 }
 
+
 #tr {
-  width: 590px;
-  margin-left: 427px;
-  margin-top: 130px;
+  width: auto;
+  margin-left: 500px;
+  margin-top: auto;
+  align-items: center;
 }
 #b{
   margin-left: 242px;
